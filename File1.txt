@@ -1,0 +1,774 @@
+USE [phoenixlab_reportingservices_com]
+GO
+/****** Object:  StoredProcedure [phoe1000].[LoadTestData]    Script Date: 08/25/2012 20:16:34 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Adrian Heald
+-- Create date: 2012-07-31
+-- Description:	Loads in some test data
+-- Changes
+-- GL 12/8/12 Added [phxUserLogT]'
+--gl 13/8/12 added phxReportLogT
+--gl 13/8/12 added phxImportLogT
+-- gl 13/8/12 added phxGlobalVariableT
+-- gl 13/8/12 added phxLabT
+-- gl 20/8/12 added contact type
+-- =============================================
+ALTER PROCEDURE [phoe1000].[LoadTestData] 
+AS
+BEGIN
+	SET NOCOUNT OFF;
+
+
+exec Deletetestdata
+
+print 'Adding [phxRolesT]'
+INSERT INTO [dbo].[phxRolesT]([RoleCode], [SecurityString], [SubRoleCode], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT N'Admin', NULL, N'PROCESS;OBS;DMDS', NULL, '20120802 16:56:58.637', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'DMDS', N'DM;MO', NULL, NULL, '20120802 16:57:40.113', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'OBS', N'MO;', NULL, NULL, '20120802 16:57:33.797', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'PROCESS', N'PR', NULL, NULL, '20120802 16:57:24.010', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'SYS', NULL, N'Admin', NULL, '20120802 16:58:44.873', N'phoe1000', NULL, NULL, NULL, NULL
+
+print 'Adding [phxUsersT]'
+
+INSERT INTO [dbo].[phxUsersT]([UserInitials], [UserName], [SecurityString], [RoleCode], [UsersLocation], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT N'GMH', N'Gerard Hedger', NULL, N'SYS', NULL, N'Test', '20120802 16:46:49.873', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'NG', N'Nicola George', NULL, N'PROCESS', NULL, N'Test', '20120802 16:45:23.157', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'ZM', N'Zdemka Martelli', NULL, N'DMDS', NULL, N'Test', '20120802 16:45:08.350', N'phoe1000', NULL, NULL, NULL, NULL
+
+
+print 'Adding [phxUsersT]'
+SET IDENTITY_INSERT [dbo].[phxListsT] ON;
+INSERT INTO [dbo].[phxListsT]([ListValueRid], [ListName], [Value], [SortOrder], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT 591113, N'Fractions (mm)', N'19.500', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591114, N'Fractions (mm)', N'13.200', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591115, N'Fractions (mm)', N'9.500', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591116, N'Fractions (mm)', N'6.700', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591117, N'Fractions (mm)', N'4.750', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591118, N'Fractions (mm)', N'3.350', 6, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591119, N'Fractions (mm)', N'2.360', 7, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591120, N'Fractions (mm)', N'1.700', 8, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591121, N'Fractions (mm)', N'1.180', 9, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591122, N'Fractions (mm)', N'1.000', 10, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591123, N'Fractions (mm)', N'0.850', 11, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591124, N'Fractions (mm)', N'0.600', 12, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591125, N'Fractions (mm)', N'0.500', 13, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591126, N'Fractions (mm)', N'0.425', 14, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591127, N'Fractions (mm)', N'0.300', 15, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591128, N'Fractions (mm)', N'0.250', 16, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591129, N'Fractions (mm)', N'0.212', 17, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591130, N'Fractions (mm)', N'0.150', 18, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591131, N'MineralList', N'Chromite_ilmenite_pos', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591132, N'MineralList', N'Chromite_pos', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591133, N'MineralList', N'Ilmenite_pos', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591134, N'MineralList', N'Clinopyroxene_undif', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591135, N'MineralList', N'Clinopyroxene_pos', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591136, N'MineralList', N'Garnet_undif', 6, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591137, N'MineralList', N'Garnet_pos', 7, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591138, N'MineralList', N'Olivine_pyroxene', 8, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591139, N'MineralList', N'Olivine_pos', 9, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591140, N'MineralList', N'Orthopyroxene_pos', 10, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591141, N'MineralList', N'Diamond', 11, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591142, N'MineralList', N'Phlogopite', 12, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591143, N'MineralList', N'Unclassified', 13, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591144, N'MineralList', N'Zircon_undif', 14, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591145, N'Background Minerals', N'Allanite', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591146, N'Background Minerals', N'Almandine', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591147, N'Background Minerals', N'Amphibole', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591148, N'Background Minerals', N'Anatase', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591149, N'Background Minerals', N'Andalusite', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591150, N'Background Minerals', N'Andradite', 6, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591151, N'Background Minerals', N'Apatite', 7, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591152, N'Background Minerals', N'Axinite', 8, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591153, N'Background Minerals', N'Barite', 9, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591154, N'Background Minerals', N'Biotite', 10, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591155, N'Background Minerals', N'Carbonate', 11, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591156, N'Background Minerals', N'Cassiterite', 12, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591157, N'Background Minerals', N'Celestite', 13, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591158, N'Background Minerals', N'Chloritoid', 14, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591159, N'Background Minerals', N'Chromite_ilmenite_neg', 15, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591160, N'Background Minerals', N'Chromite_neg', 16, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591161, N'Background Minerals', N'Chrysoberyl', 17, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591162, N'Background Minerals', N'Cinnibar', 18, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591163, N'Background Minerals', N'Clinopyroxene_neg', 19, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591164, N'Background Minerals', N'Clinozoisite', 20, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591165, N'Background Minerals', N'Collophane', 21, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591166, N'Background Minerals', N'Corundum', 22, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591167, N'Background Minerals', N'Cu_minerals', 23, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591168, N'Background Minerals', N'Diaspore', 24, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591169, N'Background Minerals', N'Dravite', 25, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591170, N'Background Minerals', N'Dumortierite', 26, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591171, N'Background Minerals', N'Epidote', 27, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591172, N'Background Minerals', N'Florencite', 28, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591173, N'Background Minerals', N'Fluorite', 29, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591174, N'Background Minerals', N'Gahnite', 30, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591175, N'Background Minerals', N'Galena', 31, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591176, N'Background Minerals', N'Garnet_neg', 32, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591177, N'Background Minerals', N'Gold', 33, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591178, N'Background Minerals', N'Graphite', 34, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591179, N'Background Minerals', N'Haematite', 35, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591180, N'Background Minerals', N'Ilmenite_neg', 36, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591181, N'Background Minerals', N'Kyanite', 37, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591182, N'Background Minerals', N'Leucoxene', 38, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591183, N'Background Minerals', N'Limonite', 39, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591184, N'Background Minerals', N'Magnetite', 40, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591185, N'Background Minerals', N'Magnophorite', 41, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591186, N'Background Minerals', N'Martite', 42, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591187, N'Background Minerals', N'Mica', 43, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591188, N'Background Minerals', N'Moissanite', 44, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591189, N'Background Minerals', N'Molybdenite', 45, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591190, N'Background Minerals', N'Monazite', 46, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591191, N'Background Minerals', N'Muscovite', 47, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591192, N'Background Minerals', N'Olivine_neg', 48, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591193, N'Background Minerals', N'Orthopyroxene_neg', 49, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591194, N'Background Minerals', N'Other', 50, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591195, N'Background Minerals', N'Perovskite', 51, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591196, N'Background Minerals', N'Phosphates', 52, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591197, N'Background Minerals', N'Piemontite', 53, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591198, N'Background Minerals', N'Platinum', 54, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591199, N'Background Minerals', N'Prehnite', 55, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591200, N'Background Minerals', N'Priderite', 56, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591201, N'Background Minerals', N'Pseudo_pyrite', 57, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591202, N'Background Minerals', N'Pumpellyite', 58, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591203, N'Background Minerals', N'Pyrite', 59, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591204, N'Background Minerals', N'Pyrolusite', 60, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591205, N'Background Minerals', N'Quartz', 61, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591206, N'Background Minerals', N'Rock_fragment', 62, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591207, N'Background Minerals', N'Rutile', 63, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591208, N'Background Minerals', N'Scheelite', 64, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591209, N'Background Minerals', N'Sillimanite', 65, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591210, N'Background Minerals', N'Sphalerite', 66, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591211, N'Background Minerals', N'Sphene', 67, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591212, N'Background Minerals', N'Spinel', 68, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591213, N'Background Minerals', N'Staurolite', 69, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591214, N'Background Minerals', N'Sulphides', 70, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591215, N'Background Minerals', N'Svanbergite', 71, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591216, N'Background Minerals', N'Tantalates', 72, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591217, N'Background Minerals', N'Thorite', 73, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591218, N'Background Minerals', N'Topaz', 74, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591219, N'Background Minerals', N'Tourmaline', 75, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591220, N'Background Minerals', N'Uranium minerals', 76, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591221, N'Background Minerals', N'Uvarovite', 77, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591222, N'Background Minerals', N'Vesuvianite', 78, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591223, N'Background Minerals', N'Wad', 79, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591224, N'Background Minerals', N'Wolframite', 80, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591225, N'Background Minerals', N'Xenotime', 81, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591226, N'Background Minerals', N'Zircon', 82, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591227, N'Abundance', N'Rare <1%', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591228, N'Abundance', N'Present 1-4%', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591229, N'Abundance', N'Common 5-20%', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591230, N'Abundance', N'Abundant 21-50%', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591231, N'Abundance', N'Dominant >50%', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591232, N'ColourList', N'Black', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591233, N'ColourList', N'Blue', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591234, N'ColourList', N'Bright green', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591235, N'ColourList', N'Brown', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591236, N'ColourList', N'Burgundy', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591237, N'ColourList', N'Colourless', 6, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591238, N'ColourList', N'Dark orange', 7, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591239, N'ColourList', N'Dark purple', 8, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591240, N'ColourList', N'Green', 9, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591241, N'ColourList', N'Grey', 10, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591242, N'ColourList', N'Lilac', 11, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591243, N'ColourList', N'Orange', 12, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591244, N'ColourList', N'Orange pink', 13, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591245, N'ColourList', N'Orange red', 14, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591246, N'ColourList', N'Pale brown', 15, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591247, N'ColourList', N'Pale green', 16, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591248, N'ColourList', N'Pale orange', 17, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591249, N'ColourList', N'Pale pink', 18, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591250, N'ColourList', N'Pale yellow', 19, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591251, N'ColourList', N'Peach', 20, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591252, N'ColourList', N'Pink', 21, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591253, N'ColourList', N'Purple', 22, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591254, N'ColourList', N'Purple blue', 23, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591255, N'ColourList', N'Purple green', 24, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591256, N'ColourList', N'Red', 25, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591257, N'ColourList', N'Rose pink', 26, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591258, N'ColourList', N'Yellow', 27, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591259, N'FormList', N'Anhedral', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591260, N'FormList', N'Euhedral', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591261, N'FormList', N'Subhedral', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591262, N'FractureList', N'Conchoidal', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591263, N'FractureList', N'Uneven', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591264, N'FractureList', N'Hackley', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591265, N'FractureList', N'Smooth', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591266, N'HabitList', N'Acicular', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591267, N'HabitList', N'Bladed', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591268, N'HabitList', N'Fibrous', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591269, N'HabitList', N'Amorphous', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591270, N'HabitList', N'Aggregate', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591271, N'HabitList', N'Tabular', 6, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591272, N'HabitList', N'Irregular', 7, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591273, N'HabitList', N'Twinned', 8, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591274, N'LustreList', N'Dull', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591275, N'LustreList', N'Sub vitreous', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591276, N'LustreList', N'Vitreous', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591277, N'LustreList', N'Metallic', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591278, N'LustreList', N'Satin sheen', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591279, N'LustreList', N'Sub metallic', 6, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591280, N'ShapeList', N'Angular', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591281, N'ShapeList', N'Sub angular', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591282, N'ShapeList', N'Rounded', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591283, N'ShapeList', N'Sub rounded', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591284, N'ShapeList', N'Blocky', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591285, N'Streak', N'Black', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591286, N'Streak', N'Brown', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591287, N'Streak', N'Grey', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591288, N'Streak', N'Red', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591289, N'Streak', N'Not streakable', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591290, N'SurfaceList', N'Kelyphite', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591291, N'SurfaceList', N'Sub kelyphitic surface', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591292, N'SurfaceList', N'Remnant of kelyphite', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591293, N'SurfaceList', N'No original surface', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591294, N'SurfaceList', N'Remnant of original surface', 5, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591295, N'SurfaceList', N'Leucoxene-perovskite', 6, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591296, N'SurfaceList', N'Sub leucoxene surface', 7, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591297, N'SurfaceList', N'Bevelled edge', 8, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591298, N'SurfaceList', N'Brown internal reflections', 9, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591299, N'SurfaceList', N'Chipped', 10, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591300, N'SurfaceList', N'Frost', 11, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591301, N'SurfaceList', N'Frost coarse', 12, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591302, N'SurfaceList', N'Frost fine', 13, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591303, N'SurfaceList', N'Granular', 14, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591304, N'SurfaceList', N'Mammilated', 15, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591305, N'SurfaceList', N'Matte', 16, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591306, N'SurfaceList', N'Pitting', 17, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591307, N'SurfaceList', N'Reaction rim', 18, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591308, N'SurfaceList', N'Rough', 19, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591309, N'SurfaceList', N'Sculptured', 20, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591310, N'SurfaceList', N'Smooth', 21, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591311, N'SurfaceList', N'Step layered', 22, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591312, N'SurfaceList', N'Vesicles', 23, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591313, N'SurfaceList', N'Limonite', 24, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591314, N'SurfaceList', N'Rock rim', 25, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591315, N'SurfaceList', N'Serpentine', 26, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591316, N'SurfaceList', N'Talc', 27, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591317, N'SurfaceList', N'Baddeleyite', 28, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591318, N'WearList', N'Fresh', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591319, N'WearList', N'Slightly worn', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591320, N'WearList', N'Moderately worn', 3, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591321, N'WearList', N'Very worn', 4, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591322, N'LabCode', N'Thunder Bay', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591323, N'LabCode', N'Belmont', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591324, N'Mass_Single', N'MASS', 1, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591325, N'Mass_Single', N'SINGLE', 2, NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  5:46PM' UNION ALL
+SELECT 591326, N'WeightUnit', N'mg', 1, NULL, '20120813 11:27:51.487', N'phoe1000', NULL, NULL, NULL, N'Aug 13 2012 11:27AM' UNION ALL
+SELECT 591327, N'WeightUnit', N'g', 2, NULL, '20120813 11:28:02.937', N'phoe1000', NULL, NULL, NULL, N'Aug 13 2012 11:28AM' UNION ALL
+SELECT 591328, N'WeightUnit', N'Kg', 3, NULL, '20120813 11:28:11.720', N'phoe1000', NULL, NULL, NULL, N'Aug 13 2012 11:28AM' UNION ALL
+SELECT 591329, N'WeightUnit', N't', 4, NULL, '20120813 11:28:17.490', N'phoe1000', NULL, NULL, NULL, N'Aug 13 2012 11:28AM' union all
+SELECT 591330, N'ContactType', N'Main Contact', 1, NULL, '20120813 11:28:17.490', N'phoe1000', NULL, NULL, NULL, N'Aug 13 2012 11:28AM' union all
+SELECT 591331, N'ContactType', N'Invoice Contact', 2, NULL, '20120813 11:28:17.490', N'phoe1000', NULL, NULL, NULL, N'Aug 13 2012 11:28AM'  
+ 
+SET IDENTITY_INSERT [dbo].[phxListsT] OFF;
+
+--delete from [phxLabT]
+print 'Adding phxLabT'
+INSERT INTO [dbo].[phxLabT]([LabCode], [LabName], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT N'BEL', N'Belmont', N'Test', '20120731 19:14:04.560', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'BUN', N'Bundoora', N'Test', '20120731 19:13:38.880', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'TB', N'Thunder Bay', N'Test', '20120731 19:13:25.397', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'BANG', N'Bangalore', N'Test', '20120731 19:13:25.397', N'phoe1000', NULL, NULL, NULL, NULL
+
+--delete from [phxClientT]
+print 'Adding phxClientT'
+INSERT INTO [dbo].[phxClientT]( [CompanyName], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  N'Rio Tinto', N'Test', '20120731 19:38:21.740', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  N'Quartz', N'Test', '20120731 19:38:47.190', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  N'Grizzly Adams', N'Test', '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL 
+/*
+UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Note ' + left(newid(),32), '20120731 19:43:22.040', N'phoe1000', NULL, NULL, NULL, NULL 
+*/
+
+--delete from [phxContactT]
+print 'Adding phxContactT'
+INSERT INTO [dbo].[phxContactT]( [ClientRid], [ContactName], [ContactType], [AddressLine1], [AddressLine2], [AddressLine3], [AddressLine4], [Country], [Email], [Telephone], [Fax], [Mobile], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'Rio%') , N'John Smith', N'Main Contact', N'Address Line 1', N'Address Line 2', N'Address Line 3', N'Address Line 4', N'Canada', N'The email ', N'999 999 999 ', N'888 888 888', N'0411 222 333', N'Test', '20120731 19:47:20.890', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), N'Bill Smith', N'Main Contact', N'Bill Smith Address Line 1', N'Address Line 2', N'Address Line 3Bill Smith', N'Address Line 4', N'Australia', N'The email ', N'999 999 999 ', N'888 888 888', N'0411 222 333', N'Test', '20120731 19:47:30.700', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'G%'), N'Paul Smith', N'Main Contact', N'Address Line 1', N'Address Line 2Paul Smith', N'Address Line 3', N'Address Line 4Paul Smith', N'Canada', N'The email ', N'999 999 999 ', N'888 888 888', N'0411 222 333', N'Test', '20120731 19:47:34.553', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'Rio%'), N'Jane Smith but with a really long name', N'Invoice Contact', N'Address Line 1', N'Address Line 2', N'Address Line 3', N'Address Line 4Jane Smith but with a really long name', N'Canada', N'The email ', N'999 999 999 ', N'888 888 888', N'0411 222 333', N'Test', '20120731 19:47:38.997', N'phoe1000', NULL, NULL, NULL, NULL
+
+--delete from [dbo].[phxProjectT]
+print 'Adding phxProjectT'
+INSERT INTO [dbo].[phxProjectT]( [ProjectCode], [ProjectName], [ClientRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  N'ABC', N'Project ABC', (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'Rio%'), N'Test', '20120731 20:09:14.643', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  N'DEF', N'Project DEF', (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), N'Test', '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL 
+UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  'zz'+left(newid(),20), 'Project ' + left(newid(),32), (select min([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), 'Some notes about ' + left(newid(),32), '20120731 20:09:28.777', N'phoe1000', NULL, NULL, NULL, NULL 
+
+
+--delete from [dbo].[phxClientBatchT]
+print 'Adding phxClientBatchT'
+INSERT INTO [dbo].[phxClientBatchT]( [ClientBatchNo], [ClientBatchNoSource], [ClientRid], [ProjectRid], [Prospect], [Pipe], [Programme], [CountryOfOrigin], [CostCode], [NoSamplesSent], [NoSamplesReceived], [DateSent], [DateReceived], [EstCompletionDate], [ProcessingInstructions], [ObservationInstruction], [SubmittedByContactRid], [ResultDistribution1ContactRid], [ResultDistribution2ContactRid1], [ResultDistribution3ContactRid1], [InvoiceContactRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  N'101A', N'eBatch', (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'Rio%'), (select max([ProjectRid]) from [dbo].[phxProjectT] where [ProjectCode] like 'ABC'), N'The creek', N'Pipe 101', N'Programme 111', N'Canada', N'A1234567', 20, 18, '20120731 00:00:00.000', '20120814 00:00:00.000', '20190106 00:00:00.000', N'Crush first', N'Look carefully for diamonds', NULL, NULL, NULL, NULL, NULL, N'Test', '20120731 20:00:46.607', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT  N'101B', N'eBatch', (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'Q%'), (select max([ProjectRid]) from [dbo].[phxProjectT] where [ProjectCode] like 'ABC'), N'Top of the hill', N'Pipe 1012', N'Programme 222', N'Canada', N'A1234567', 20, 18, '20120731 00:00:00.000', '20120814 00:00:00.000', '20190106 00:00:00.000', N'Crush first', N'Look carefully for diamonds', NULL, NULL, NULL, NULL, NULL, N'Test', '20120731 20:02:04.463', N'phoe1000', '20120731 20:03:57.763', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'101C', N'InHouse', (select max([ClientRid]) from [dbo].[phxClientT] where companyName like 'G%'), (select max([ProjectRid]) from [dbo].[phxProjectT] where [ProjectCode] like 'DEF'), N'The creek', N'Pipe 101', N'Programme 111', N'Canada', N'A1234567', 20, 18, '20120731 00:00:00.000', '20120814 00:00:00.000', '20190106 00:00:00.000', N'Crush first', N'Look carefully for diamonds', NULL, NULL, NULL, NULL, NULL, N'Test', '20120731 20:02:13.123', N'phoe1000', '20120731 20:03:09.010', N'phoe1000', NULL, NULL
+
+--delete from [dbo].[phxClientSamplesT]
+print 'Adding phxClientSamplesT'
+INSERT INTO [dbo].[phxClientSamplesT]( [ClientSampleNo], [ClientBatchRid], [SampleWeight], [SampleState], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  N'1', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), 58.000000, N'Rock', N'Test', '20120731 21:02:27.640', N'phoe1000', '20120731 21:02:51.203', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'2', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), 61.000000, N'Sand', N'Test', '20120731 21:02:27.640', N'phoe1000', '20120731 21:03:55.413', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'3', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), 63.000000, N'Silt', N'Test', '20120731 21:02:27.640', N'phoe1000', '20120731 21:03:56.877', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'4', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), 67.000000, N'Rock', N'Test', '20120731 21:02:27.640', N'phoe1000', '20120731 21:03:57.907', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'5', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), 69.000000, N'Rock', N'Test', '20120731 21:02:27.640', N'phoe1000', '20120731 21:04:00.320', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'6', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), 3.000000, N'Rock', N'Test', '20120731 21:02:27.640', N'phoe1000', '20120731 21:04:01.010', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'7', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), 45.000000, N'Rock', N'Test', '20120731 21:02:27.640', N'phoe1000', '20120731 21:04:03.350', N'phoe1000', NULL, NULL
+	
+--delete from [dbo].[phxLabJobNoT]
+print 'Adding phxLabJobNoT'
+INSERT INTO [dbo].[phxLabJobNoT]([LabJobNo], [ClientBatchRid], [LabCode], [Date], [Operator], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT N'101', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), N'TB', '20120731 00:00:00.000', NULL, N'Test', '20120731 21:12:42.453', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'102', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), N'TB', '20120731 00:00:00.000', NULL, N'Test', '20120731 21:12:42.453', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT N'103', (select max([ClientBatchRid]) from [dbo].[phxClientBatchT] where [ClientBatchNo] like '101A'), N'TB', '20120731 00:00:00.000', NULL, N'Test', '20120731 21:12:42.453', N'phoe1000', NULL, NULL, NULL, NULL
+
+
+--delete from [dbo].[phxSampleT]
+print 'Adding phxSampleT'
+INSERT INTO [dbo].[phxSampleT]( [LabJobNo], [SampleNo], [ClientSampleNo], [SampleWeight], [SampleState], [ParentFractionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  N'101', N'12001', N'1', 23.000000, NULL, NULL, N'Test', '20120731 13:04:31.527', N'phoe1000', '20120731 21:20:53.400', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'101', N'12002', N'2', 23.000000, NULL, NULL, N'Test', '20120731 13:04:31.527', N'phoe1000', '20120731 21:20:55.170', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'101', N'12003', N'3', 23.000000, NULL, NULL, N'Test', '20120731 13:04:31.527', N'phoe1000', '20120731 21:20:55.800', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'101', N'12004', N'4', 23.000000, NULL, NULL, N'Test', '20120731 13:04:31.527', N'phoe1000', '20120731 21:20:56.753', N'phoe1000', NULL, NULL UNION ALL
+SELECT  N'101', N'12005', N'5', 23.000000, NULL, NULL, N'Test', '20120731 13:04:31.527', N'phoe1000', '20120731 21:20:57.773', N'phoe1000', NULL, NULL
+
+--delete from dbo.phxProcessAttributeDefinitionT
+
+--delete from [dbo].[phxProcessDefinitionT]
+print 'Adding phxProcessDefinitionT'
+INSERT INTO [dbo].[phxProcessDefinitionT]( [ProcessName], [EndOfLine], [ProcessCode], [ProcessDescription], [WeightInUnits], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  N'MI', 0, N'22', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Magstream', 0, N'21', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Hydrogen Reduction', 0, N'14', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'High Tension', 0, N'16', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'RFMS', 0, N'26', N'(Rotating Field Magnetic Separator) Separates material based on the electromagnetic properties of the grains of the material.', NULL, NULL, NULL, N'phoe1000', '20120731 21:36:02.383', N'phoe1000', NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Chemical Attrition', 0, N'23', N'', N'g', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Caustic Fusion', 0, N'19', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Quarantine', 0, N'01', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Sample Entry', 0, N'02', N'', N't', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Crushing', 0, N'03', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Re Mag', 0, N'06', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'-0.8 Robotic Cell', 0, N'04', N'Not used', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'+0.8 Screened material', 0, N'05', N'Not Used', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Re Non Mag', 0, N'07', N'Information', N'g', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'QTZ removal Entry', 0, N'08', N'TBAY?', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'QTZ Removal Sinks', 0, N'09', N'TBAY?', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'MI Sinks', 0, N'10', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'MI Floats', 0, N'11', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Magstream Heavies', 0, N'12', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Magstream Lights', 0, N'13', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Roll Mag Sep', 0, N'15', N'(Induced Magnetic Roll Separator) Separate material based on the magnetic properties of the particles in the material. Kimberlitic Indicators are not highly magnetic and so the process step is intended to separate these out from other, more magnetic, particles.', N'', NULL, NULL, N'phoe1000', '20120731 21:36:36.877', N'phoe1000', NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Cook', 0, N'17', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'X-Ray', 0, N'18', N'', N'g', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Microfusion', 0, N'20', N'This is a material separation process step that extracts diamonds from the caustic fusion concentrate from the caustic fusion process step. Chemicals are added to the concentrate to remove non diamond material.', N'', NULL, NULL, N'phoe1000', '20120731 21:35:57.170', N'phoe1000', NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Outside Attrition', 0, N'24', N'Not Used', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Acid Etch', 0, N'25', N'Not Used', N'g', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Post Peroxide', 0, N'27', N'Not Used', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Peroxide Gangue', 0, N'28', N'Not Used', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Total Diamond', 0, N'29', N'Not Used', N'mg', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Pre HL', 0, N'30', N'Not Used', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Post HL', 0, N'31', N'Not Used', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Hydorflouric Acid', 0, N'32', N'Not Used', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'DMS Attrition', 0, N'33', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'DMS Wet', 0, N'34', N'', N'g', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'DMS Screen Fines', 0, N'35', N'', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Nitric Acid', 0, N'36', N'Part of Chemical Attritions???', N'', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' UNION ALL
+SELECT  N'Test End Of Line', 1, N'99', N'test of end of line property', N'Kg', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM' union all
+SELECT  N'Reception', 0, N'00', N'Receive Samples', N'Kg', NULL, NULL, N'phoe1000', NULL, NULL, NULL, N'Jul 30 2012  2:53PM'
+
+--delete from dbo.phxProcessAttributeDefinitionT
+print 'Adding phxProcessAttributeDefinitionT'
+INSERT INTO [dbo].[phxProcessAttributeDefinitionT]( [ProcessDefinitionRid], [AttribName], [AttribDefaultValue], [DisplayOrder], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'MI Fluid SG', N'3.2', 1, N'Test', '20120801 09:46:50.900', N'phoe1000', NULL, NULL, NULL, NULL union all
+SELECT  (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'Magstream'), N'Magnetic strength', N'7.1', 1, N'Test', '20120801 09:46:50.900', N'phoe1000', NULL, NULL, NULL, NULL 
+
+
+--delete from dbo.[phxProcessFractionDefinitionT]
+print 'Adding phxProcessFractionDefinitionT'
+INSERT INTO [dbo].[phxProcessFractionDefinitionT]( [ProcessDefinitionRid], [FractionName], [Units], [DisplayOrder], [Description], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'MI Floats', N'g', 1, NULL, N'Test', '20120801 09:38:32.620', N'phoe1000', '20120801 09:39:01.780', N'phoe1000', NULL, NULL UNION ALL
+SELECT  (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'MI Sinks', N'g', 2, NULL, N'Test', '20120801 09:38:47.507', N'phoe1000', '20120801 09:39:04.680', N'phoe1000', NULL, NULL UNION ALL
+SELECT  (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'Magstream'), N'Magstream Magnetic', N'g', 1, NULL, N'Test', '20120801 09:38:32.620', N'phoe1000', '20120801 09:39:01.780', N'phoe1000', NULL, NULL UNION ALL
+SELECT  (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'Magstream'), N'Magstream Non-Magnetic', N'g', 2, NULL, N'Test', '20120801 09:38:47.507', N'phoe1000', '20120801 09:39:04.680', N'phoe1000', NULL, NULL
+
+declare @FractionRid111 as bigint
+declare @FractionRid12 as bigint
+declare @FractionRid13 as bigint
+declare @FractionRid14 as bigint
+declare @FractionRid21 as bigint
+declare @FractionRid22 as bigint
+declare @FractionRid23 as bigint
+declare @FractionRid24 as bigint
+
+
+declare @FractionInRid as bigint
+declare @FractionRid1 as bigint
+declare @FractionRid2 as bigint
+declare @SampleRid1 as bigint
+declare @SampleRid2 as bigint
+declare @SampleRid3 as bigint
+
+declare @SampleProcessReceptionRid1 as bigint
+declare @SampleProcessMIRid1 as bigint
+declare @SampleProcessDMSRid1 as bigint
+declare @SampleProcessMagstreamRid1 as bigint
+declare @SampleProcessReceptionRid2 as bigint
+declare @SampleProcessMIRid2 as bigint
+declare @SampleProcessDMSRid2 as bigint
+declare @SampleProcessMagstreamRid2 as bigint
+
+
+select @SampleRid1 = max([SampleRid]) from [dbo].[phxSampleT] where [SampleNo] = '12001'
+select @SampleRid2 = max([SampleRid]) from [dbo].[phxSampleT] where [SampleNo] = '12002'
+select @SampleRid3 = max([SampleRid]) from [dbo].[phxSampleT] where [SampleNo] = '12003'
+
+--delete from dbo.[phxSampleProcessT]
+--Add initial process for reception
+print 'Adding phxSampleProcessT'
+INSERT INTO [dbo].[phxSampleProcessT]( [SampleRid], [ProcessCode], [ProcessName], [Date], [Operator], [WeightIn], [WeightInUnits], [FractionInRid], [LabCode], [ProcessDefinitionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleRid1, N'00', N'Reception', '20120801 00:00:00.000', N'GMH', 923.000000000, N'g', NULL, N'TB', (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'Reception'), N'Test', '20120801 10:33:17.193', N'phoe1000', '20120801 10:34:21.167', N'phoe1000', NULL, NULL
+set @SampleProcessReceptionRid1 = @@identity
+
+--GMH 20120806 1231
+--Add process for MI
+print 'Adding [phxSampleProcessT]'
+INSERT INTO [dbo].[phxSampleProcessT]( [SampleRid], [ProcessCode], [ProcessName], [Date], [Operator], [WeightIn], [WeightInUnits], [FractionInRid], [LabCode], [ProcessDefinitionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleRid1, N'22', N'MI', '20120801 00:00:00.000', N'GMH', 470.500000000, N'g', null, N'TB', (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'Test', '20120801 10:33:17.193', N'phoe1000', '20120801 10:37:20.033', N'phoe1000', NULL, NULL 
+set @SampleProcessMIRid1 = @@identity
+
+--Add process for DMS
+print 'Adding [phxSampleProcessT]'
+INSERT INTO [dbo].[phxSampleProcessT]( [SampleRid], [ProcessCode], [ProcessName], [Date], [Operator], [WeightIn], [WeightInUnits], [FractionInRid], [LabCode], [ProcessDefinitionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleRid1, N'33', N'DMS', '20120801 00:00:00.000', N'GMH', 470.500000000, N'g', null, N'TB', (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'Test', '20120801 10:33:17.193', N'phoe1000', '20120801 10:37:20.033', N'phoe1000', NULL, NULL 
+set @SampleProcessDMSRid1 = @@identity
+
+--Add process for MAG
+print 'Adding [phxSampleProcessT]'
+INSERT INTO [dbo].[phxSampleProcessT]( [SampleRid], [ProcessCode], [ProcessName], [Date], [Operator], [WeightIn], [WeightInUnits], [FractionInRid], [LabCode], [ProcessDefinitionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleRid1, N'21', N'Magstream', '20120801 00:00:00.000', N'GMH', 470.500000000, N'g', null, N'TB', (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'Test', '20120801 10:33:17.193', N'phoe1000', '20120801 10:37:20.033', N'phoe1000', NULL, NULL 
+set @SampleProcessMagstreamRid1 = @@identity
+
+--Add initial process for reception
+print 'Adding phxSampleProcessT'
+INSERT INTO [dbo].[phxSampleProcessT]( [SampleRid], [ProcessCode], [ProcessName], [Date], [Operator], [WeightIn], [WeightInUnits], [FractionInRid], [LabCode], [ProcessDefinitionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleRid2, N'00', N'Reception', '20120801 00:00:00.000', N'GMH', 923.000000000, N'g', NULL, N'TB', (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'Reception'), N'Test', '20120801 10:33:17.193', N'phoe1000', '20120801 10:34:21.167', N'phoe1000', NULL, NULL
+set @SampleProcessReceptionRid2 = @@identity
+
+--Add process for MI
+print 'Adding [phxSampleProcessT]'
+INSERT INTO [dbo].[phxSampleProcessT]( [SampleRid], [ProcessCode], [ProcessName], [Date], [Operator], [WeightIn], [WeightInUnits], [FractionInRid], [LabCode], [ProcessDefinitionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleRid2, N'22', N'MI', '20120801 00:00:00.000', N'GMH', 470.500000000, N'g', null, N'TB', (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'Test', '20120801 10:33:17.193', N'phoe1000', '20120801 10:37:20.033', N'phoe1000', NULL, NULL 
+set @SampleProcessMIRid2 = @@identity
+
+--Add process for DMS
+print 'Adding [phxSampleProcessT]'
+INSERT INTO [dbo].[phxSampleProcessT]( [SampleRid], [ProcessCode], [ProcessName], [Date], [Operator], [WeightIn], [WeightInUnits], [FractionInRid], [LabCode], [ProcessDefinitionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleRid2, N'33', N'DMS', '20120801 00:00:00.000', N'GMH', 470.500000000, N'g', null, N'TB', (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'Test', '20120801 10:33:17.193', N'phoe1000', '20120801 10:37:20.033', N'phoe1000', NULL, NULL 
+set @SampleProcessDMSRid2 = @@identity
+
+--Add process for MAG
+print 'Adding [phxSampleProcessT]'
+INSERT INTO [dbo].[phxSampleProcessT]( [SampleRid], [ProcessCode], [ProcessName], [Date], [Operator], [WeightIn], [WeightInUnits], [FractionInRid], [LabCode], [ProcessDefinitionRid], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleRid2, N'21', N'Magstream', '20120801 00:00:00.000', N'GMH', 470.500000000, N'g', null, N'TB', (select max([ProcessDefinitionRid]) from [dbo].[phxProcessDefinitionT] where [ProcessName] = 'MI'), N'Test', '20120801 10:33:17.193', N'phoe1000', '20120801 10:37:20.033', N'phoe1000', NULL, NULL 
+set @SampleProcessMagstreamRid2 = @@identity
+
+--declare @SampleProcessReceptionRid1 as bigint
+--declare @SampleProcessMIRid1 as bigint
+--declare @SampleProcessDMSRid1 as bigint
+--declare @SampleProcessMagstreamRid1 as bigint
+--declare @SampleProcessReceptionRid2 as bigint
+--declare @SampleProcessMIRid2 as bigint
+--declare @SampleProcessDMSRid2 as bigint
+--declare @SampleProcessMagstreamRid2 as bigint
+
+declare @SampleFractionReceptionRid1 as bigint
+declare @SampleFractionMIRid11 as bigint
+declare @SampleFractionMIRid12 as bigint
+declare @SampleFractionDMSRid11 as bigint
+declare @SampleFractionDMSRid12 as bigint
+declare @SampleFractionMagstreamRid11 as bigint
+declare @SampleFractionMagstreamRid12 as bigint
+
+declare @SampleFractionReceptionRid2 as bigint
+declare @SampleFractionMIRid21 as bigint
+declare @SampleFractionMIRid22 as bigint
+declare @SampleFractionDMSRid21 as bigint
+declare @SampleFractionDMSRid22 as bigint
+declare @SampleFractionMagstreamRid21 as bigint
+declare @SampleFractionMagstreamRid22 as bigint
+
+
+--delete from [dbo].[phxSampleProcessFractionT]
+--Add initial fraction for reception
+print 'Adding phxSampleProcessFractionT'
+INSERT INTO [dbo].[phxSampleProcessFractionT]( [SampleProcessRid], [FractionName], [FractionShortName], [FractionWeight], [FractionDisplayOrder], [WeightUnits], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleProcessReceptionRid1, N'Sample No', N'101a', 750.000000, 1.000, N'g', N'Test', '20120801 10:37:06.220', N'phoe1000', NULL, NULL, NULL, NULL
+set @SampleFractionReceptionRid1 = scope_identity()
+
+
+--Add fraction for MI
+print 'Adding [phxSampleProcessFractionT]'
+INSERT INTO [dbo].[phxSampleProcessFractionT]( [SampleProcessRid], [FractionName], [FractionShortName], [FractionWeight], [FractionDisplayOrder], [WeightUnits], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleProcessMIRid1, N'MI Floats', N'Floats', 520.000000, 1.000, N'g', N'Test', '20120801 10:37:06.220', N'phoe1000', NULL, NULL, NULL, NULL 
+set @SampleFractionMIRid11 = scope_identity()
+
+print 'Adding [phxSampleProcessFractionT]'
+INSERT INTO [dbo].[phxSampleProcessFractionT]( [SampleProcessRid], [FractionName], [FractionShortName], [FractionWeight], [FractionDisplayOrder], [WeightUnits], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleProcessMIRid1, N'MI Sinks', N'Sinks', 520.000000, 1.000, N'g', N'Test', '20120801 10:37:06.220', N'phoe1000', NULL, NULL, NULL, NULL 
+set @SampleFractionMIRid12 = scope_identity()
+
+--Add process attribute for MI
+print 'Adding [phxSampleProcessAttributeT]'
+INSERT INTO [dbo].[phxSampleProcessAttributeT]( [SampleProcessRid], [AttributeName], [AttributeValue], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleProcessMIRid1, N'MI Fluid SG', N'3.7', N'Test', '20120801 21:25:20.683', N'phoe1000', NULL, NULL, NULL, NULL
+
+print 'Adding [phxSampleProcessFractionT]'
+INSERT INTO [dbo].[phxSampleProcessFractionT]( [SampleProcessRid], [FractionName], [FractionShortName], [FractionWeight], [FractionDisplayOrder], [WeightUnits], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleProcessDMSRid1, N'DMS Floats', N'Floats', 520.000000, 1.000, N'g', N'Test', '20120801 10:37:06.220', N'phoe1000', NULL, NULL, NULL, NULL 
+set @SampleFractionDMSRid11 = scope_identity()
+
+print 'Adding [phxSampleProcessFractionT]'
+INSERT INTO [dbo].[phxSampleProcessFractionT]( [SampleProcessRid], [FractionName], [FractionShortName], [FractionWeight], [FractionDisplayOrder], [WeightUnits], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleProcessDMSRid1, N'DMS Sinks', N'Sinks', 520.000000, 1.000, N'g', N'Test', '20120801 10:37:06.220', N'phoe1000', NULL, NULL, NULL, NULL 
+set @SampleFractionDMSRid12 = scope_identity()
+
+print 'Adding [phxSampleProcessFractionT]'
+INSERT INTO [dbo].[phxSampleProcessFractionT]( [SampleProcessRid], [FractionName], [FractionShortName], [FractionWeight], [FractionDisplayOrder], [WeightUnits], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleProcessMagstreamRid1, N'Magnetic', N'Mag', 520.000000, 1.000, N'g', N'Test', '20120801 10:37:06.220', N'phoe1000', NULL, NULL, NULL, NULL 
+set @SampleFractionMagstreamRid11 = scope_identity()
+
+print 'Adding [phxSampleProcessFractionT]'
+INSERT INTO [dbo].[phxSampleProcessFractionT]( [SampleProcessRid], [FractionName], [FractionShortName], [FractionWeight], [FractionDisplayOrder], [WeightUnits], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleProcessMagstreamRid1, N'Non magnetic', N'Non-mag', 520.000000, 1.000, N'g', N'Test', '20120801 10:37:06.220', N'phoe1000', NULL, NULL, NULL, NULL 
+set @SampleFractionMagstreamRid12 = scope_identity()
+
+update [phxSampleProcessT]
+set FractionInRid = @SampleFractionReceptionRid1
+where SampleProcessRid = @SampleProcessMIRid1
+
+update [phxSampleProcessT]
+set FractionInRid = @SampleFractionMIRid11
+where SampleProcessRid = @SampleProcessDMSRid1
+
+print @SampleProcessDMSRid1
+print @SampleProcessMagstreamRid1
+update [phxSampleProcessT]
+set FractionInRid = @SampleFractionDMSRid11
+where SampleProcessRid = @SampleProcessMagstreamRid1
+
+declare @MinObsHeaderRid as bigint
+--Add observation header for MI Fraction
+print 'Adding [phxMinObsHeaderT]'
+INSERT INTO [dbo].[phxMinObsHeaderT]( [FractionRid], [ObsDate], [Observer], [WeightIn], [ObservedWeight], [ObservationTime], [LabCode], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleFractionMagstreamRid11, '20120801 00:00:00.000', N'GMH', 750.000000000, 250.000000000, 17.00, N'TB', N'Test', '20120801 21:42:50.557', N'phoe1000', NULL, NULL, NULL, NULL 
+set @MinObsHeaderRid = scope_identity()
+
+print 'Adding phxMinObservationsT'
+INSERT INTO [dbo].[phxMinObservationsT]( [MinObsHdrRid], [Mineral], [GrainCount], [Estimated], [PopulationNo], [MountNo], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @MinObsHeaderRid, N'Garnet', 6, 0, N'12345', N'1', N'test', '20120801 22:06:26.707', N'phoe1000', NULL, NULL, NULL, N'Aug  1 2012 10:06PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Chromite', 112, 0, N'12346', N'2', N'test', '20120801 22:06:53.550', N'phoe1000', NULL, NULL, NULL, N'Aug  1 2012 10:06PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Garnet', 250, 1, N'12347', N'3', NULL, '20120801 22:07:20.270', N'phoe1000', NULL, NULL, NULL, N'Aug  1 2012 10:07PM' 
+
+print 'Adding [phxMinObservationBackgroundT]'
+INSERT INTO [dbo].[phxMinObservationBackgroundT]( [MinObsHdrRid], [BackgroundMineral], [BackgroundValue], [ListNameBackgroundMineral], [ListNameBackgroundValue], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @MinObsHeaderRid, N'Apatite', N'Present 1-4%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:22.553', N'phoe1000', '20120801 22:51:23.030', N'phoe1000', NULL, N'Aug  1 2012 10:46PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Cassiterite', N'Present 1-4%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:24.520', N'phoe1000', '20120801 22:51:24.997', N'phoe1000', NULL, N'Aug  1 2012 10:46PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Chromite_neg', N'Abundant 21-50%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:27.040', N'phoe1000', '20120801 22:51:33.367', N'phoe1000', NULL, N'Aug  1 2012 10:46PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Collophane', N'Present 1-4%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:30.680', N'phoe1000', '20120801 22:51:31.237', N'phoe1000', NULL, N'Aug  1 2012 10:46PM' 
+
+
+
+
+
+--Add observation header for MI Fraction
+print 'Adding [phxMinObsHeaderT]'
+INSERT INTO [dbo].[phxMinObsHeaderT]( [FractionRid], [ObsDate], [Observer], [WeightIn], [ObservedWeight], [ObservationTime], [LabCode], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleFractionMagstreamRid12, '20120801 00:00:00.000', N'GMH', 300.000000000, 100.000000000, 32.00, N'TB', N'Test', '20120801 21:42:50.557', N'phoe1000', NULL, NULL, NULL, NULL
+set @MinObsHeaderRid = scope_identity()
+
+print 'Adding [phxMinObservationBackgroundT]'
+INSERT INTO [dbo].[phxMinObservationBackgroundT]( [MinObsHdrRid], [BackgroundMineral], [BackgroundValue], [ListNameBackgroundMineral], [ListNameBackgroundValue], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @MinObsHeaderRid, N'Diaspore', N'Abundant 21-50%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:35.970', N'phoe1000', '20120801 22:51:36.587', N'phoe1000', NULL, N'Aug  1 2012 10:46PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Apatite', N'Present 1-4%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:22.553', N'phoe1000', '20120801 22:52:02.000', N'phoe1000', NULL, N'Aug  1 2012 10:46PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Cassiterite', N'Present 1-4%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:24.520', N'phoe1000', '20120801 22:52:03.020', N'phoe1000', NULL, N'Aug  1 2012 10:46PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Chromite_neg', N'Abundant 21-50%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:27.040', N'phoe1000', '20120801 22:52:04.227', N'phoe1000', NULL, N'Aug  1 2012 10:46PM' UNION ALL
+SELECT @MinObsHeaderRid, N'Collophane', N'Present 1-4%', N'Background Minerals', N'Abundance', NULL, '20120801 22:46:30.680', N'phoe1000', '20120801 22:52:05.997', N'phoe1000', NULL, N'Aug  1 2012 10:46PM'
+
+
+declare @MinObsRid1 as Bigint
+declare @MinObsRid2 as Bigint
+declare @MinObsRid3 as Bigint
+
+print 'Adding phxMinObservationsT'
+INSERT INTO [dbo].[phxMinObservationsT]( [MinObsHdrRid], [Mineral], [GrainCount], [Estimated], [PopulationNo], [MountNo], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @MinObsHeaderRid, N'Garnet', 4, 0, N'12348', N'4', N'test', '20120801 22:07:41.000', N'phoe1000', '20120801 22:08:23.110', N'phoe1000', NULL, N'Aug  1 2012 10:07PM' 
+set @MinObsRid1 = scope_identity()
+INSERT INTO [dbo].[phxMinObservationsT]( [MinObsHdrRid], [Mineral], [GrainCount], [Estimated], [PopulationNo], [MountNo], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @MinObsHeaderRid, N'Chromite', 112, 0, N'12349', N'5', N'test', '20120801 22:07:41.747', N'phoe1000', '20120801 22:08:37.360', N'phoe1000', NULL, N'Aug  1 2012 10:07PM' 
+set @MinObsRid2 = scope_identity()
+INSERT INTO [dbo].[phxMinObservationsT]( [MinObsHdrRid], [Mineral], [GrainCount], [Estimated], [PopulationNo], [MountNo], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @MinObsHeaderRid, N'Garnet', 300, 1, N'12350', N'6', NULL, '20120801 22:07:42.587', N'phoe1000', '20120801 22:08:42.040', N'phoe1000', NULL, N'Aug  1 2012 10:07PM'
+set @MinObsRid3 = scope_identity()
+
+print 'Adding [phxMinObservationAttribsT]'
+INSERT INTO [dbo].[phxMinObservationAttribsT]( [MinObsRid], [AttribName], [AttribValue], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @MinObsRid1, N'Color', N'Blue', N'Test', '20120801 22:17:02.263', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @MinObsRid1, N'Color', N'Green', N'Test', '20120801 22:17:15.490', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @MinObsRid1, N'Shape', N'Blocky', N'Test', '20120801 22:17:32.227', N'phoe1000', '20120801 22:19:00.937', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid2, N'Color', N'Blue', N'Test', '20120801 22:18:44.717', N'phoe1000', '20120801 22:19:08.540', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid2, N'Surface', N'Kelyphite', N'Test', '20120801 22:18:45.353', N'phoe1000', '20120801 22:20:14.407', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid2, N'Shape', N'Rounded', N'Test', '20120801 22:18:46.000', N'phoe1000', '20120801 22:19:11.050', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid2, N'Color', N'Blue', N'Test', '20120801 22:17:02.263', N'phoe1000', '20120801 22:19:38.847', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid2, N'Color', N'Green', N'Test', '20120801 22:17:15.490', N'phoe1000', '20120801 22:19:39.607', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid3, N'Shape', N'Blocky', N'Test', '20120801 22:17:32.227', N'phoe1000', '20120801 22:19:40.267', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid3, N'Color', N'Blue', N'Test', '20120801 22:18:44.717', N'phoe1000', '20120801 22:19:42.917', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid3, N'Surface', N'Kelyphite', N'Test', '20120801 22:18:45.353', N'phoe1000', '20120801 22:20:22.260', N'phoe1000', NULL, NULL UNION ALL
+SELECT @MinObsRid3, N'Shape', N'Rounded', N'Test', '20120801 22:18:46.000', N'phoe1000', '20120801 22:19:45.430', N'phoe1000', NULL, NULL
+
+ 
+print 'Adding phxDiamondSizeClassesT'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass],DisplayOrder ,[Note]) select 'MmSqM','+19.50' ,1,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass],DisplayOrder ,[Note]) select 'MmSqM','+ 13.20' ,2,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+   9.50' ,3,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+   6.70' ,4,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+   4.75' ,5,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+   3.35' ,6,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+   2.36' ,7,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass],DisplayOrder ,[Note]) select 'MmSqM','+   1.70' ,8,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass],DisplayOrder ,[Note]) select 'MmSqM','+   1.18' ,9,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+ 0.850' ,10,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+ 0.600' ,11,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+ 0.425' ,12,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass],DisplayOrder ,[Note]) select 'MmSqM','+ 0.300' ,13,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+ 0.212' ,14,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+ 0.150' ,15,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','+0.106' ,16,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'MmSqM','- 0.106' ,17,'Test'
+
+
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass],DisplayOrder ,[Note]) select 'DTC','+ 23' ,1,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 21' ,2,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 19' ,3,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 17' ,4,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 15' ,5,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 13' ,6,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 12' ,7,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 11' ,8,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 9' ,9,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 7' ,10,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 5' ,11,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 3' ,12,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','+ 1' ,13,'Test'
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,DisplayOrder,[Note]) select 'DTC','- 1' ,14,'Test'
+
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 14.8ct' ,'Test',1
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 10.8ct' ,'Test',2
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+10 Ct' ,'Test',3
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+9 Ct' ,'Test',4
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+8 Ct' ,'Test',5
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+7 Ct' ,'Test',6
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+6 Ct' ,'Test',7
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+5 Ct' ,'Test',8
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+4 Ct' ,'Test',9
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+3 Ct' ,'Test',10
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 10gr' ,'Test',11
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 8gr' ,'Test',12
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 6gr' ,'Test',13
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 5gr' ,'Test',14
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 4gr' ,'Test',15
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 3gr' ,'Test',16
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','+ 11' ,'Test',17
+insert into [phxDiamondSizeClassesT] ([MeshType] ,[SizeClass] ,[Note],displayorder) select 'Grainer','- 11' ,'Test',18
+
+declare @SampleDiamondSizeHdrRid1 as bigint
+declare @SampleDiamondSizeHdrRid2 as bigint
+print 'Adding [phxSampleDiamondSizingT]'
+INSERT INTO [dbo].[phxSampleDiamondSizingT]( [FractionRid], [Pass], [Date], [SampleType], [LabCode], [EntryWeight], [SampleDescription], [DateCleaned], [DateSized], [ConductedBy], [PreCleaningWeight], [PostCleaningWeight], [PreCleaningNo], [PostCleaningNo], [WeightTreated], [CheckedBy], [DateSigned], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleFractionMagstreamRid11, N'1', '20120802 00:00:00.000', N'rough', N'TB', 35.0000, N'small pieces', '20120802 00:00:00.000', '20120803 00:00:00.000', N'ZM', 35.0000, 35.0000, 7.0000, 7.0000, 35.0000, N'ZM', '20120805 00:00:00.000', N'Test', '20120802 11:01:08.757', N'phoe1000', NULL, NULL, NULL, NULL 
+set @SampleDiamondSizeHdrRid1 = scope_identity()
+INSERT INTO [dbo].[phxSampleDiamondSizingT]( [FractionRid], [Pass], [Date], [SampleType], [LabCode], [EntryWeight], [SampleDescription], [DateCleaned], [DateSized], [ConductedBy], [PreCleaningWeight], [PostCleaningWeight], [PreCleaningNo], [PostCleaningNo], [WeightTreated], [CheckedBy], [DateSigned], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT  @SampleFractionMagstreamRid11, N'1', '20120802 00:00:00.000', N'rough', N'TB', 47.0000, N'small pieces', '20120802 00:00:00.000', '20120803 00:00:00.000', N'ZM', 47.0000, 46.0000, 8.0000, 6.0000, 35.0000, N'ZM', '20120805 00:00:00.000', N'Test', '20120802 11:01:08.757', N'phoe1000', NULL, NULL, NULL, NULL
+set @SampleDiamondSizeHdrRid2 = scope_identity()
+
+print 'Adding [phxSampleDiamondSizingDetailT]'
+INSERT INTO [dbo].[phxSampleDiamondSizingDetailT]( [SampleDiamondSizeHdrRid], [MeshType], [SizeClass], [Stones], [Carats], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleDiamondSizeHdrRid1, N'DTC', N'+ 23', 2, 1.7000, N'Test', '20120802 12:30:14.913', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid1, N'DTC', N'+ 21', 3, 2.1000, N'Test', '20120802 12:30:38.593', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid1, N'DTC', N'+ 19', 5, 3.8000, N'Test', '20120802 12:30:50.707', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid1, N'MmSqM', N'+   9.50', 5, 3.8000, N'Test', '20120802 12:30:50.707', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, N'MmSqM', N'+   9.50', 5, 3.8000, N'Test', '20120802 12:30:50.707', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, N'DTC', N'+ 19', 2, 1.1000, N'Test', '20120802 12:30:50.707', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, N'DTC', N'+ 21', 3, 2.1000, N'Test', '20120802 12:30:38.593', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, N'DTC', N'+ 23', 2, 1.7000, N'Test', '20120802 12:30:14.913', N'phoe1000', NULL, NULL, NULL, NULL
+
+
+print 'Adding [phxSampleDiamondSizingIndividualsT]'
+INSERT INTO [dbo].[phxSampleDiamondSizingIndividualsT]( [SampleDiamondSizeHdrRid], [IndividualWeights], [Note], [ServerCreatedOn], [ServerCreatedBy], [ServerUpdatedOn], [ServerUpdatedBy], [ClientCreatedBy], [ClientUpdatedBy])
+SELECT @SampleDiamondSizeHdrRid1, 0.8380, N'test', '20120802 12:37:58.167', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid1, 0.4500, N'test', '20120802 12:37:59.587', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid1, 0.1200, N'test', '20120802 12:38:00.920', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid1, 0.2000, NULL, '20120802 12:38:02.350', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid1, 0.3400, NULL, '20120802 12:38:03.417', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid1, 0.2540, NULL, '20120802 12:38:04.403', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, 0.7000, NULL, '20120802 12:38:05.377', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, 0.4300, NULL, '20120802 12:38:06.830', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, 0.8100, NULL, '20120802 12:38:07.940', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, 0.4000, NULL, '20120802 12:38:08.993', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, 0.6000, NULL, '20120802 12:38:10.063', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, 0.1200, N'test', '20120802 12:38:00.920', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, 0.1200, N'test', '20120802 12:38:00.920', N'phoe1000', NULL, NULL, NULL, NULL UNION ALL
+SELECT @SampleDiamondSizeHdrRid2, 0.1200, N'test', '20120802 12:38:00.920', N'phoe1000', NULL, NULL, NULL, NULL
+
+
+
+
+print 'Adding [phxUserLogT]'
+INSERT INTO phxUserLogT
+(AuthUser,ComputerName, TimeLoggedOn ,TimeLoggedOff,ClientVersion, DBVersion, Note ,ServerCreatedOn,ServerCreatedBy,ServerUpdatedOn,ServerUpdatedBy,ClientCreatedBy,ClientUpdatedBy)
+select 'gmh', 'ISTT1', GETDATE(), GETDATE(), '1.1', '1.2',N'test', '20120802 12:38:00.920', N'phoe1000', NULL, NULL, NULL, NULL
+
+print 'adding phxReportLogT'
+insert into phxReportLogT
+(ReportName, UserName, ComputerName, ReportType, StartTimestamp, EndTimestamp, [Status], Records, ClientVersion, ExportFilename, [SQL], ElapsedTimeSecs, Tstamp, Note, ServerCreatedOn, ServerCreatedBy, ServerUpdatedOn, ServerUpdatedBy, ClientCreatedBy, ClientUpdatedBy)
+select 'ReportName', 'GMH', 'istt1', 'ty', getdate(), getdate(), 'status', 22, '1.1', 'c:\temp\export.csv', 'select x from y', 22 , getdate(), 'note',     getdate(), N'phoe1000', NULL, NULL, NULL, NULL
+
+print 'adding phxImportLog'
+insert into phxImportLogT
+(ImportFile, ImportFileDirectory, ImportFileType, Note, ServerCreatedOn, ServerCreatedBy, ServerUpdatedOn, ServerUpdatedBy, ClientCreatedBy, ClientUpdatedBy)
+select 'import file', 'directory', 'filetype', 'note',     getdate(), N'phoe1000', NULL, NULL, NULL, NULL
+
+print 'adding phxGlobalVariableT'
+insert into phxGlobalVariableT
+( Fieldname, FieldVal, FieldType, FieldDescription, Note, ServerCreatedOn, ServerCreatedBy, ServerUpdatedOn, ServerUpdatedBy, ClientCreatedBy, ClientUpdatedBy)
+select 'fieldname1', 'val', 'type',  'description', 'note', getdate(), N'phoe1000', NULL, NULL, NULL, NULL
+
+
+print 'adding phxLabT'
+insert into phxLabT
+( LabCode, LabName, Note, ServerCreatedOn, ServerCreatedBy, ServerUpdatedOn, ServerUpdatedBy, ClientCreatedBy, ClientUpdatedBy)
+select 'GL', 'Coburg Laboratory Services', 'note', getdate(), N'phoe1000', NULL, NULL, NULL, NULL
+
+END
+
