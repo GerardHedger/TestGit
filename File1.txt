@@ -1,3 +1,5 @@
+9:00
+
 USE [phoenixlab_reportingservices_com]
 GO
 /****** Object:  StoredProcedure [phoe1000].[LoadTestData]    Script Date: 08/25/2012 20:16:34 ******/
